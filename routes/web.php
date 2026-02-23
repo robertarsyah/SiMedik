@@ -39,6 +39,19 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/admin/dashboard', function () {
             return view('dashboard.admin');
         })->name('admin.dashboard');
+
+        // Pendaftaran Pasien
+        Route::get('/admin/patients', [\App\Http\Controllers\Admin\PatientController::class, 'index'])->name('admin.patients.index');
+        Route::get('/admin/patients/create', [\App\Http\Controllers\Admin\PatientController::class, 'create'])->name('admin.patients.create');
+        Route::post('/admin/patients', [\App\Http\Controllers\Admin\PatientController::class, 'store'])->name('admin.patients.store');
+        Route::get('/admin/patients/{patient}/edit', [\App\Http\Controllers\Admin\PatientController::class, 'edit'])->name('admin.patients.edit');
+        Route::put('/admin/patients/{patient}', [\App\Http\Controllers\Admin\PatientController::class, 'update'])->name('admin.patients.update');
+        Route::delete('/admin/patients/{patient}', [\App\Http\Controllers\Admin\PatientController::class, 'destroy'])->name('admin.patients.destroy');
+
+        // Antrian Pasien
+        Route::get('/admin/queues', [\App\Http\Controllers\Admin\QueueController::class, 'index'])->name('admin.queues.index');
+        Route::post('/admin/queues', [\App\Http\Controllers\Admin\QueueController::class, 'store'])->name('admin.queues.store');
+        Route::patch('/admin/queues/{queue}/call', [\App\Http\Controllers\Admin\QueueController::class, 'call'])->name('admin.queues.call');
     });
 
     Route::middleware('role:dokter')->group(function () {

@@ -30,12 +30,12 @@
 
         @if (auth()->user()->role === 'admin')
             <div class="pt-4 pb-1 text-xs font-bold text-gray-400 uppercase">Pelayanan</div>
-            <a href="#"
-                class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-all">
+            <a href="{{ route('admin.patients.index') }}"
+                class="flex items-center gap-3 px-4 py-2 {{ request()->routeIs('admin.patients.index') ? 'text-pink-600 bg-pink-50 font-bold' : 'text-gray-600 hover:text-pink-600 hover:bg-pink-50' }} rounded-lg transition-all">
                 Pendaftaran Pasien
             </a>
-            <a href="#"
-                class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-all">
+            <a href="{{ route('admin.queues.index') }}"
+                class="flex items-center gap-3 px-4 py-2 {{ request()->routeIs('admin.queues.index') ? 'text-pink-600 bg-pink-50 font-bold' : 'text-gray-600 hover:text-pink-600' }} rounded-lg">
                 Antrian
             </a>
         @endif
