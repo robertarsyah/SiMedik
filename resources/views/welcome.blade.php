@@ -23,18 +23,20 @@
 
             <div>
                 @if (Route::has('login'))
-                    <div class="flex items-center gap-4">
+                    <div>
                         @auth
                             <a href="{{ url('/dashboard') }}"
-                                class="font-semibold text-gray-600 hover:text-pink-600 transition">Dashboard</a>
+                                class="font-semibold text-white bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded-md transition shadow-sm">Ke
+                                Dashboard</a>
                         @else
-                            <a href="{{ route('login') }}"
-                                class="font-semibold text-gray-600 hover:text-pink-600 transition">Masuk</a>
-
-                            @if (Route::has('register'))
-                                <a href="{{ route('register') }}"
-                                    class="font-semibold text-white bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded-md transition shadow-sm">Daftar</a>
-                            @endif
+                            <div class="flex items-center gap-4">
+                                <a href="{{ route('login') }}"
+                                    class="font-semibold text-gray-600 hover:text-pink-600 transition">Log in</a>
+                                @if (Route::has('register'))
+                                    <a href="{{ route('register') }}"
+                                        class="font-semibold text-white bg-pink-500 hover:bg-pink-600 px-4 py-2 rounded-md transition shadow-sm">Register</a>
+                                @endif
+                            </div>
                         @endauth
                     </div>
                 @endif

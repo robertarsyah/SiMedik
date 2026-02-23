@@ -16,28 +16,25 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="font-sans antialiased">
-    <div class="min-h-screen bg-gray-100">
-        @include('layouts.navigation')
+<body class="font-sans antialiased bg-gray-50">
+    <div class="flex h-screen overflow-hidden">
 
-        <!-- Page Heading -->
-        @isset($header)
-            <header class="bg-white shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endisset
+        @include('layouts.sidebar')
 
-        <!-- Page Content -->
-        <main>
-            {{ $slot }}
-        </main>
+        <div class="flex-1 flex flex-col overflow-y-auto">
+
+            @include('layouts.navigation')
+
+            <main class="flex-1 p-6">
+                {{ $slot }}
+            </main>
+
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             // Popup Sukses Login
             @if (session('login_success'))
                 Swal.fire({
@@ -46,7 +43,7 @@
                     text: 'Selamat datang kembali di SIMEDIK.',
                     confirmButtonColor: '#db2777',
                     showConfirmButton: false,
-                    timer: 2000 
+                    timer: 2000
                 });
             @endif
 
@@ -62,6 +59,46 @@
                 });
             @endif
         });
+    </script>
+
+    <script>
+        // Popup Sukses dari Controller
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: "{{ session('success') }}",
+                confirmButtonColor: '#db2777',
+                timer: 2500
+            });
+        @endif
+
+        @if (session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Opps!',
+                text: "{{ session('error') }}",
+                confirmButtonColor: '#db2777',
+            });
+        @endif
+
+        // Fungsi Konfirmasi Hapus
+        function confirmDelete(id) {
+            Swal.fire({
+                title: 'Apakah Anda yakin?',
+                text: "Data pengguna akan dihapus permanen!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#db2777',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Ya, Hapus!',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('delete-form-' + id).submit();
+                }
+            })
+        }
     </script>
 </body>
 
