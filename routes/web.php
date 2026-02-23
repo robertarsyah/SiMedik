@@ -27,12 +27,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return view('dashboard.super_admin');
         })->name('superadmin.dashboard');
 
+        // Manajemen Pengguna
         Route::get('/super-admin/users', [\App\Http\Controllers\SuperAdmin\UserController::class, 'index'])->name('superadmin.users.index');
         Route::get('/super-admin/users/create', [\App\Http\Controllers\SuperAdmin\UserController::class, 'create'])->name('superadmin.users.create');
         Route::post('/super-admin/users', [\App\Http\Controllers\SuperAdmin\UserController::class, 'store'])->name('superadmin.users.store');
         Route::delete('/super-admin/users/{user}', [\App\Http\Controllers\SuperAdmin\UserController::class, 'destroy'])->name('superadmin.users.destroy');
         Route::get('/super-admin/users/{user}/edit', [\App\Http\Controllers\SuperAdmin\UserController::class, 'edit'])->name('superadmin.users.edit');
         Route::put('/super-admin/users/{user}', [\App\Http\Controllers\SuperAdmin\UserController::class, 'update'])->name('superadmin.users.update');
+
+        // Manajemen Obat
+        Route::resource('super-admin/medicines', 'App\Http\Controllers\SuperAdmin\MedicineController')->names('superadmin.medicines');
     });
 
     Route::middleware('role:admin')->group(function () {

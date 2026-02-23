@@ -22,8 +22,8 @@
                 class="flex items-center gap-3 px-4 py-2 {{ request()->routeIs('superadmin.users.index') ? 'text-pink-600 bg-pink-50 font-bold' : 'text-gray-600 hover:text-pink-600 hover:bg-pink-50' }} rounded-lg transition-all">
                 Kelola Pengguna
             </a>
-            <a href="#"
-                class="flex items-center gap-3 px-4 py-2 text-gray-600 hover:text-pink-600 hover:bg-pink-50 rounded-lg transition-all">
+            <a href="{{ route('superadmin.medicines.index') }}"
+                class="flex items-center gap-3 px-4 py-2 {{ request()->routeIs('superadmin.medicines.*') ? 'text-pink-600 bg-pink-50 font-bold' : 'text-gray-600 hover:text-pink-600' }} rounded-lg transition-all">
                 Data Obat
             </a>
         @endif
