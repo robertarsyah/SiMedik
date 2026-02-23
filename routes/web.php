@@ -62,6 +62,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/dokter/dashboard', function () {
             return view('dashboard.dokter');
         })->name('dokter.dashboard');
+
+        // Pemeriksaan Pasien
+        Route::get('/doctor/dashboard', [App\Http\Controllers\Doctor\ExaminationController::class, 'index'])->name('doctor.index');
+        Route::get('/doctor/history', [App\Http\Controllers\Doctor\ExaminationController::class, 'history'])->name('doctor.history');
+        Route::get('/doctor/examine/{queue}', [App\Http\Controllers\Doctor\ExaminationController::class, 'create'])->name('doctor.examine');
+        Route::post('/doctor/examine/{queue}', [App\Http\Controllers\Doctor\ExaminationController::class, 'store'])->name('doctor.store');
     });
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
