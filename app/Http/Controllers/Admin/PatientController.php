@@ -8,9 +8,15 @@ use Illuminate\Http\Request;
 
 class PatientController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $patients = Patient::latest()->get();
+        $sortBy = $request->query('sort', 'name');
+        $orderBy = $request->query('order', 'asc');
+
+        $patients = \App\Models\Patient::orderBy($sortBy, $orderBy)
+            ->paginate(5)
+            ->withQueryString();
+
         return view('admin.patients.index', compact('patients'));
     }
 

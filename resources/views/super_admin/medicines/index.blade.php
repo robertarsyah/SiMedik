@@ -16,9 +16,27 @@
                     <table class="w-full text-left border-collapse">
                         <thead>
                             <tr class="bg-pink-50 text-pink-700 uppercase text-xs">
-                                <th class="px-6 py-4 font-bold border-b">Nama Obat</th>
+                                <th class="px-6 py-3 border-b">
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'name', 'order' => request('order') == 'asc' ? 'desc' : 'asc']) }}"
+                                        class="flex items-center gap-1 hover:text-pink-600 transition">
+                                        Nama Obat
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                                        </svg>
+                                    </a>
+                                </th>
                                 <th class="px-6 py-4 font-bold border-b">Satuan</th>
-                                <th class="px-6 py-4 font-bold border-b">Stok</th>
+                                <th class="px-6 py-3 border-b text-center">
+                                    <a href="{{ request()->fullUrlWithQuery(['sort' => 'stock', 'order' => request('order') == 'asc' ? 'desc' : 'asc']) }}"
+                                        class="flex items-center justify-center gap-1 hover:text-pink-600 transition">
+                                        Stok
+                                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M7 16V4m0 0L3 8m4-4l4 4m6 0v12m0 0l4-4m-4 4l-4-4"></path>
+                                        </svg>
+                                    </a>
+                                </th>
                                 <th class="px-6 py-4 font-bold border-b">Harga</th>
                                 <th class="px-6 py-4 font-bold border-b text-center">Aksi</th>
                             </tr>
@@ -53,6 +71,39 @@
                             @endforelse
                         </tbody>
                     </table>
+                    <div class="p-4 border-t border-gray-100">
+                        @if ($medicines->hasPages())
+                            {{ $medicines->links() }}
+                        @else
+                            <div class="flex items-center justify-between">
+                                <p class="text-sm text-gray-500">
+                                    Menampilkan <span class="font-bold">{{ $medicines->count() }}</span> data
+                                </p>
+                                <span class="relative z-0 inline-flex shadow-sm rounded-md">
+                                    <span
+                                        class="relative inline-flex items-center px-2 py-2 text-sm font-medium text-gray-300 bg-gray-50 border border-gray-300 cursor-not-allowed rounded-l-md">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                    <span
+                                        class="relative inline-flex items-center px-4 py-2 -ml-px text-sm font-bold text-pink-600 bg-white border border-gray-300 cursor-default">
+                                        1
+                                    </span>
+                                    <span
+                                        class="relative inline-flex items-center px-2 py-2 -ml-px text-sm font-medium text-gray-300 bg-gray-50 border border-gray-300 cursor-not-allowed rounded-r-md">
+                                        <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z"
+                                                clip-rule="evenodd" />
+                                        </svg>
+                                    </span>
+                                </span>
+                            </div>
+                        @endif
+                    </div>
                 </div>
             </div>
         </div>

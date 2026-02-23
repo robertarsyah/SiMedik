@@ -7,17 +7,30 @@ use Illuminate\Http\Request;
 
 class QueueController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
         $today = date('Y-m-d');
-        $queues = \App\Models\Queue::with('patient')
-            ->where('queue_date', $today)
-            ->orderBy('queue_number', 'asc')
-            ->get();
+        $sortBy = $request->query('sort', 'queue_number');
+        $orderBy = $request->query('order', 'asc');
 
         $patients = \App\Models\Patient::orderBy('name', 'asc')->get();
 
-        return view('admin.queues.index', compact('queues', 'patients'));
+        $query = \App\Models\Queue::with('patient')
+            ->join('patients', 'queues.patient_id', '=', 'patients.id')
+            ->select('queues.*')
+            ->where('queue_date', $today);
+
+        if ($sortBy === 'name') {
+            $query->orderBy('patients.name', $orderBy);
+        } else {
+            $query->orderBy('queues.queue_number', 'asc');
+        }
+
+        $queues = $query->paginate(5)->withQueryString();
+
+        $allQueues = \App\Models\Queue::where('queue_date', $today)->get();
+
+        return view('admin.queues.index', compact('queues', 'patients', 'allQueues'));
     }
 
     public function store(Request $request)

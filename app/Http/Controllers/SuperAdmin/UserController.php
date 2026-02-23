@@ -10,9 +10,15 @@ use Illuminate\Validation\Rules;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::where('id', '!=', auth()->id())->latest()->get();
+        $sortBy = $request->query('sort', 'name');
+        $orderBy = $request->query('order', 'asc');
+
+        $users = \App\Models\User::orderBy($sortBy, $orderBy)
+            ->paginate(5)
+            ->withQueryString();
+
         return view('super_admin.users.index', compact('users'));
     }
 

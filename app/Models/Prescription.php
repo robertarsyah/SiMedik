@@ -12,7 +12,6 @@ class Prescription extends Model
         'quantity',
         'instruction'
     ];
-
     public function medicalRecord()
     {
         return $this->belongsTo(MedicalRecord::class);
@@ -20,6 +19,6 @@ class Prescription extends Model
 
     public function medicine()
     {
-        return $this->belongsTo(Medicine::class);
+        return $this->belongsTo(Medicine::class, 'medicine_id');
     }
 }

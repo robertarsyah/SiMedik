@@ -6,7 +6,14 @@ use Illuminate\Database\Eloquent\Model;
 
 class MedicalRecord extends Model
 {
-    protected $fillable = ['patient_id', 'user_id', 'complaint', 'diagnosis', 'action'];
+    protected $fillable = [
+        'queue_id', 
+        'patient_id',
+        'user_id',
+        'complaint',
+        'diagnosis',
+        'action'
+    ];
 
     public function patient()
     {
@@ -17,9 +24,9 @@ class MedicalRecord extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    
+
     public function prescriptions()
     {
-        return $this->hasMany(Prescription::class);
+        return $this->hasMany(Prescription::class, 'medical_record_id');
     }
 }

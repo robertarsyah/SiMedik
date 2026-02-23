@@ -80,7 +80,27 @@
                 </div>
             </div>
 
-            @if ($lowStockMedicines->count() > 0)
+            @if ($stats['medicines'] == 0)
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-dashed border-gray-300">
+                    <div class="p-8 text-center">
+                        <div
+                            class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-50 text-blue-600 mb-4">
+                            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z">
+                                </path>
+                            </svg>
+                        </div>
+                        <h3 class="text-lg font-bold text-gray-800 mb-1">Data Obat Masih Kosong</h3>
+                        <p class="text-sm text-gray-500 mb-5">Sistem belum memiliki data master obat. Silakan input obat
+                            terlebih dahulu agar dokter bisa meresepkan obat ke pasien.</p>
+                        <a href="{{ route('superadmin.medicines.index') }}"
+                            class="inline-block bg-blue-600 text-white px-6 py-2 rounded-lg font-bold shadow-md hover:bg-blue-700 transition">
+                            + Input Data Obat
+                        </a>
+                    </div>
+                </div>
+            @elseif($lowStockMedicines->count() > 0)
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg border border-red-100">
                     <div class="px-6 py-4 border-b border-gray-100 bg-red-50 flex justify-between items-center">
                         <h3 class="font-bold text-red-700 flex items-center gap-2">
