@@ -13,6 +13,7 @@ class ExaminationController extends Controller
             ->where('queue_date', date('Y-m-d'))
             ->where('status', 'diperiksa')
             ->get();
+
         return view('doctor.index', compact('queues'));
     }
 

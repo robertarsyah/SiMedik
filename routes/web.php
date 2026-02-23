@@ -24,7 +24,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware('role:super_admin')->group(function () {
         Route::get('/super-admin/dashboard', function () {
-            return view('dashboard.super_admin');
+            $stats = [
+                'users' => \App\Models\User::count(),
+                'medicines' => \App\Models\Medicine::count(),
+                'patients' => \App\Models\Patient::count(),
+                'queues_today' => \App\Models\Queue::whereDate('queue_date', date('Y-m-d'))->count(),
+            ];
+
+            $lowStockMedicines = \App\Models\Medicine::where('stock', '<', 10)->get();
+
+            return view('dashboard.super_admin', compact('stats', 'lowStockMedicines'));
         })->name('superadmin.dashboard');
 
         // Manajemen Pengguna
@@ -41,7 +50,16 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware('role:admin')->group(function () {
         Route::get('/admin/dashboard', function () {
-            return view('dashboard.admin');
+            $today = date('Y-m-d');
+
+            $stats = [
+                'total_antrian' => \App\Models\Queue::whereDate('queue_date', $today)->count(),
+                'menunggu' => \App\Models\Queue::whereDate('queue_date', $today)->where('status', 'menunggu')->count(),
+                'diperiksa' => \App\Models\Queue::whereDate('queue_date', $today)->where('status', 'diperiksa')->count(),
+                'selesai' => \App\Models\Queue::whereDate('queue_date', $today)->where('status', 'selesai')->count(),
+            ];
+
+            return view('dashboard.admin', compact('stats'));
         })->name('admin.dashboard');
 
         // Pendaftaran Pasien
@@ -60,7 +78,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::middleware('role:dokter')->group(function () {
         Route::get('/dokter/dashboard', function () {
-            return view('dashboard.dokter');
+            $today = date('Y-m-d');
+            $stats = [
+                'menunggu' => \App\Models\Queue::where('queue_date', $today)->where('status', 'diperiksa')->count(),
+                'selesai_hari_ini' => \App\Models\Queue::where('queue_date', $today)->where('status', 'selesai')->count(),
+                'total_pasien' => \App\Models\MedicalRecord::where('user_id', auth()->id())->count(),
+            ];
+            return view('dashboard.dokter', compact('stats'));
         })->name('dokter.dashboard');
 
         // Pemeriksaan Pasien
