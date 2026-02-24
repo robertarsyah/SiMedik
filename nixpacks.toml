@@ -1,0 +1,8 @@
+[variables]
+    NIXPACKS_PHP_VERSION = '8.4'
+
+[phases.setup]
+    nixPkgs = ['php84', 'php84Packages.composer', 'php84Packages.bcmath', 'php84Packages.pdo_mysql']
+
+[phases.install]
+    cmds = ['composer install --optimize-autoloader --no-scripts --no-interaction']
