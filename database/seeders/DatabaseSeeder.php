@@ -10,28 +10,33 @@ class DatabaseSeeder extends Seeder
 {
     public function run(): void
     {
-        User::create([
-            'name' => 'Super Admin',
-            'email' => 'superadmin@simedik.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('simedik123'),
-            'role' => 'super_admin',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'superadmin@simedik.com'], // Cek berdasarkan email
+            [
+                'name' => 'Super Admin',
+                'email_verified_at' => now(),
+                'password' => Hash::make('simedik123'),
+                'role' => 'super_admin',
+            ]
+        );
 
-        User::create([
-            'name' => 'Admin Kasir',
-            'email' => 'admin@simedik.com',
-            'email_verified_at' => now(),
-            'password' => Hash::make('simedik123'),
-            'role' => 'admin',
-        ]);
+        User::updateOrCreate(
+            ['email' => 'admin@simedik.com'],
+            [
+                'name' => 'Admin Kasir',
+                'email_verified_at' => now(),
+                'password' => Hash::make('simedik123'),
+                'role' => 'admin',
+            ]
+        );
 
-        User::create([
-            'name' => 'Dokter Tirta',
+        User::updateOrCreate([
             'email' => 'dokter@simedik.com',
+        ], [
+            'name' => 'Dokter Tirta',
             'email_verified_at' => now(),
             'password' => Hash::make('simedik123'),
-            'role' => 'dokter', 
+            'role' => 'dokter',
         ]);
     }
 }
